@@ -19,9 +19,15 @@ import pl.mokaz.valuation.service.inf.DataReader;
 public class CurrencyFromCSVReader implements DataReader<Map<String, BigDecimal>> {
 
 	private static final Logger logger = LoggerFactory.getLogger(CurrencyFromCSVReader.class);
+	private final String path;
+
+	public CurrencyFromCSVReader(String path) {
+		super();
+		this.path = path;
+	}
 
 	@Override
-	public Map<String, BigDecimal> read(String path) {
+	public Map<String, BigDecimal> read() {
 		boolean isInvalidPath = validatePath(path);
 		if (isInvalidPath) {
 			return new HashMap<>();

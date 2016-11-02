@@ -5,7 +5,7 @@ import java.util.Objects;
 @FunctionalInterface
 public interface DataReader<T> {
 
-	T read(String path);
+	T read();
 
 	default boolean validatePath(String path) {
 		return Objects.isNull(path) || path.isEmpty();

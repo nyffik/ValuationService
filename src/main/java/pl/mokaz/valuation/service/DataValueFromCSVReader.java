@@ -19,9 +19,15 @@ import pl.mokaz.valuation.service.inf.DataReader;
 public class DataValueFromCSVReader implements DataReader<List<DataValue>> {
 
 	private static final Logger logger = LoggerFactory.getLogger(DataValueFromCSVReader.class);
+	private final String path;
+
+	public DataValueFromCSVReader(String path) {
+		super();
+		this.path = path;
+	}
 
 	@Override
-	public List<DataValue> read(String path) {
+	public List<DataValue> read() {
 
 		boolean isInvalidPath = validatePath(path);
 		if (isInvalidPath) {

@@ -1,6 +1,7 @@
 package pl.mokaz.valuation.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import com.opencsv.bean.CsvBindByName;
 
@@ -16,6 +17,10 @@ public class DataValue {
 	@CsvBindByName(column = "matching_id")
 	private Long matchingId;
 
+	public BigDecimal totalPrice() {
+		return price.multiply(new BigDecimal(quantity)).setScale(2, RoundingMode.HALF_UP);
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -29,6 +34,8 @@ public class DataValue {
 		builder.append(quantity);
 		builder.append(", matchingId=");
 		builder.append(matchingId);
+		builder.append(", totalPrice=");
+		builder.append(totalPrice());
 		builder.append("]");
 		return builder.toString();
 	}

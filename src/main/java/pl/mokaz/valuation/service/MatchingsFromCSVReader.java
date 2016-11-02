@@ -18,9 +18,15 @@ import pl.mokaz.valuation.service.inf.DataReader;
 public class MatchingsFromCSVReader implements DataReader<Map<Long, Integer>> {
 
 	private static final Logger logger = LoggerFactory.getLogger(CurrencyFromCSVReader.class);
+	private final String path;
+
+	public MatchingsFromCSVReader(String path) {
+		super();
+		this.path = path;
+	}
 
 	@Override
-	public Map<Long, Integer> read(String path) {
+	public Map<Long, Integer> read() {
 		boolean isInvalidPath = validatePath(path);
 		if (isInvalidPath) {
 			return new HashMap<>();

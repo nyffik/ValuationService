@@ -26,8 +26,8 @@ public class ReadCvsTest {
 
 	@Test
 	public void shouldReadDataFromCSV() {
-		DataReader<List<DataValue>> reader = new DataValueFromCSVReader();
-		List<DataValue> data = reader.read(DATA_PATH);
+		DataReader<List<DataValue>> reader = new DataValueFromCSVReader(DATA_PATH);
+		List<DataValue> data = reader.read();
 		assertThat(data).hasSize(9);
 
 		DataValue firtsData = data.get(0);
@@ -47,32 +47,32 @@ public class ReadCvsTest {
 
 	@Test
 	public void shouldReturnEmptyListWhenDataPathIsNull() {
-		DataReader<List<DataValue>> reader = new DataValueFromCSVReader();
+		DataReader<List<DataValue>> reader = new DataValueFromCSVReader(null);
 
-		List<DataValue> datas = reader.read(null);
+		List<DataValue> datas = reader.read();
 		assertThat(datas).isEmpty();
 	}
 
 	@Test
 	public void shouldReturnEmptyListWhenDataPathIEmpty() {
-		DataReader<List<DataValue>> reader = new DataValueFromCSVReader();
+		DataReader<List<DataValue>> reader = new DataValueFromCSVReader("");
 
-		List<DataValue> datas = reader.read("");
+		List<DataValue> datas = reader.read();
 		assertThat(datas).isEmpty();
 	}
 
 	@Test
 	public void shouldThrowValuationExceptionWhenDataPathNotExist() {
-		DataReader<List<DataValue>> reader = new DataValueFromCSVReader();
+		DataReader<List<DataValue>> reader = new DataValueFromCSVReader(DATA_PATH_INVALID);
 
-		assertThatThrownBy(() -> reader.read(DATA_PATH_INVALID)).isInstanceOf(ValuationException.class)
+		assertThatThrownBy(() -> reader.read()).isInstanceOf(ValuationException.class)
 				.hasMessageContaining("Error during reading CVS File");
 	}
 
 	@Test
 	public void shouldReadCurrencyFileFromCVS() {
-		DataReader<Map<String, BigDecimal>> reader = new CurrencyFromCSVReader();
-		Map<String, BigDecimal> currencies = reader.read(CURRENCY_CSV);
+		DataReader<Map<String, BigDecimal>> reader = new CurrencyFromCSVReader(CURRENCY_CSV);
+		Map<String, BigDecimal> currencies = reader.read();
 
 		assertThat(currencies).hasSize(3).contains(entry("GBP", new BigDecimal("2.4")),
 				entry("EU", new BigDecimal("2.1")), entry("PLN", new BigDecimal("1")));
@@ -80,57 +80,57 @@ public class ReadCvsTest {
 
 	@Test
 	public void shouldReturnEmptyMapWhenCurrencyPathIsNull() {
-		DataReader<Map<String, BigDecimal>> reader = new CurrencyFromCSVReader();
+		DataReader<Map<String, BigDecimal>> reader = new CurrencyFromCSVReader(null);
 
-		Map<String, BigDecimal> datas = reader.read(null);
+		Map<String, BigDecimal> datas = reader.read();
 		assertThat(datas).isEmpty();
 	}
 
 	@Test
 	public void shouldReturnEmptyMapWhenCurrencyPathIEmpty() {
-		DataReader<Map<String, BigDecimal>> reader = new CurrencyFromCSVReader();
+		DataReader<Map<String, BigDecimal>> reader = new CurrencyFromCSVReader("");
 
-		Map<String, BigDecimal> datas = reader.read("");
+		Map<String, BigDecimal> datas = reader.read();
 		assertThat(datas).isEmpty();
 	}
 
 	@Test
 	public void shouldThrowValuationExceptionWhenCurrencyPathNotExist() {
-		DataReader<Map<String, BigDecimal>> reader = new CurrencyFromCSVReader();
+		DataReader<Map<String, BigDecimal>> reader = new CurrencyFromCSVReader(DATA_PATH_INVALID);
 
-		assertThatThrownBy(() -> reader.read(DATA_PATH_INVALID)).isInstanceOf(ValuationException.class)
+		assertThatThrownBy(() -> reader.read()).isInstanceOf(ValuationException.class)
 				.hasMessageContaining("Error during reading CVS File");
 	}
 
 	@Test
 	public void shouldReadMatchingFileFromCVS() {
-		DataReader<Map<Long, Integer>> reader = new MatchingsFromCSVReader();
-		Map<Long, Integer> currencies = reader.read(MATCHING_CSV);
+		DataReader<Map<Long, Integer>> reader = new MatchingsFromCSVReader(MATCHING_CSV);
+		Map<Long, Integer> currencies = reader.read();
 
 		assertThat(currencies).hasSize(3).contains(entry(1l, 2), entry(2l, 2), entry(3l, 3));
 	}
 
 	@Test
 	public void shouldReturnEmptyMapWhenMatchingsPathIsNull() {
-		DataReader<Map<Long, Integer>> reader = new MatchingsFromCSVReader();
+		DataReader<Map<Long, Integer>> reader = new MatchingsFromCSVReader(null);
 
-		Map<Long, Integer> datas = reader.read(null);
+		Map<Long, Integer> datas = reader.read();
 		assertThat(datas).isEmpty();
 	}
 
 	@Test
 	public void shouldReturnEmptyMapWhenMatchingsPathIEmpty() {
-		DataReader<Map<Long, Integer>> reader = new MatchingsFromCSVReader();
+		DataReader<Map<Long, Integer>> reader = new MatchingsFromCSVReader("");
 
-		Map<Long, Integer> datas = reader.read("");
+		Map<Long, Integer> datas = reader.read();
 		assertThat(datas).isEmpty();
 	}
 
 	@Test
 	public void shouldThrowValuationExceptionWhenMatchingsPathNotExist() {
-		DataReader<Map<Long, Integer>> reader = new MatchingsFromCSVReader();
+		DataReader<Map<Long, Integer>> reader = new MatchingsFromCSVReader(DATA_PATH_INVALID);
 
-		assertThatThrownBy(() -> reader.read(DATA_PATH_INVALID)).isInstanceOf(ValuationException.class)
+		assertThatThrownBy(() -> reader.read()).isInstanceOf(ValuationException.class)
 				.hasMessageContaining("Error during reading CVS File");
 	}
 
