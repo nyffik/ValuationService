@@ -11,6 +11,20 @@ public class DataResult {
 	private BigDecimal totalPrice;
 	@CsvBindByName(column = "avg_price")
 	private BigDecimal avgPrice;
+
+	public DataResult() {
+	}
+
+	public DataResult(Long matchingId, BigDecimal totalPrice, BigDecimal avgPrice, String currency,
+			Integer ignoredCount) {
+		super();
+		this.matchingId = matchingId;
+		this.totalPrice = totalPrice;
+		this.avgPrice = avgPrice;
+		this.currency = currency;
+		this.ignoredCount = ignoredCount;
+	}
+
 	@CsvBindByName
 	private String currency;
 	@CsvBindByName(column = "ignored_products_count")

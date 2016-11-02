@@ -1,24 +1,43 @@
 package pl.mokaz.valuation.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static pl.mokaz.valuation.service.TestPath.DATA_PATH;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import pl.mokaz.valuation.model.DataResult;
 
 public class ValuationServiceTest {
-	private static final String MATCHING_CSV = "src/test/resources/matchings.csv";
-	private static final String CURRENCY_CSV = "src/test/resources/currencies.csv";
-	private static final String DATA_PATH = "src/test/resources/data.csv";
+
+	private Map<Long, Integer> matchings = new HashMap<>();
+	private Map<String, BigDecimal> ratio = new HashMap<>();
+
+	private AggregationService aggregationService;
+	private ValuationService valuationService;
+
+	@Before
+	public void setUp() {
+
+		ratio.put("GBP", BigDecimal.valueOf(2.4));
+		ratio.put("EU", BigDecimal.valueOf(2.1));
+		ratio.put("PLN", BigDecimal.valueOf(1));
+
+		matchings.put(1l, 2);
+		matchings.put(2l, 2);
+		matchings.put(3l, 3);
+		aggregationService = new AggregationService(new DataValueConversionService(ratio, "PLN"), matchings);
+		valuationService = new ValuationService(new DataValueFromCSVReader(DATA_PATH.getPath()), aggregationService);
+	}
 
 	@Test
-	public void shouldReturnData() {
-		ValuationService valuationService = new ValuationService(new DataValueFromCSVReader(DATA_PATH),
-				new CurrencyFromCSVReader(CURRENCY_CSV), new MatchingsFromCSVReader(MATCHING_CSV), "PLN");
+	public void shouldReturnProperDataResult() {
 
 		List<DataResult> results = valuationService.calculate();
 
@@ -45,9 +64,6 @@ public class ValuationServiceTest {
 		assertThat(dataResult3.getTotalPrice()).isEqualTo(new BigDecimal("27720.00"));
 		assertThat(dataResult3.getAvgPrice()).isEqualTo(new BigDecimal("2772.00"));
 		assertThat(dataResult3.getIgnoredCount()).isEqualTo(2);
-
-		CVSWriter cvsWriter = new CVSWriter();
-		cvsWriter.write("src/test/resources/top_products.csv", results);
 
 	}
 

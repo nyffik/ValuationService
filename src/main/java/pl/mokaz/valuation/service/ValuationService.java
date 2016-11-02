@@ -15,11 +15,9 @@ public class ValuationService {
 	private final DataReader<List<DataValue>> dataReader;
 	private AggregationService aggregationService;
 
-	public ValuationService(DataReader<List<DataValue>> dataReader, DataReader<Map<String, BigDecimal>> currencyReader,
-			DataReader<Map<Long, Integer>> matchingsReader, String targetCurrency) {
-		super();
+	public ValuationService(DataReader<List<DataValue>> dataReader, AggregationService aggregationService) {
 		this.dataReader = dataReader;
-		aggregationService = new AggregationService(currencyReader.read(), targetCurrency, matchingsReader.read());
+		this.aggregationService = aggregationService;
 	}
 
 	public List<DataResult> calculate() {
@@ -49,7 +47,6 @@ public class ValuationService {
 
 	private BigDecimal getAvgPrice(BigDecimal totalPrice, List<DataValue> values) {
 		Integer collect = getQuantity(values);
-		System.out.println(collect);
 		return totalPrice.divide(new BigDecimal(collect));
 	}
 

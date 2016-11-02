@@ -1,4 +1,4 @@
-package pl.mokaz.valuation;
+package pl.mokaz.valuation.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -12,17 +12,14 @@ import org.junit.Test;
 
 import pl.mokaz.valuation.exception.ValuationException;
 import pl.mokaz.valuation.model.DataValue;
-import pl.mokaz.valuation.service.CurrencyFromCSVReader;
-import pl.mokaz.valuation.service.DataValueFromCSVReader;
-import pl.mokaz.valuation.service.MatchingsFromCSVReader;
 import pl.mokaz.valuation.service.inf.DataReader;
 
-public class ReadCvsTest {
+public class ReadCsvTest {
 
-	private static final String MATCHING_CSV = "src/test/resources/matchings.csv";
-	private static final String CURRENCY_CSV = "src/test/resources/currencies.csv";
-	private static final String DATA_PATH = "src/test/resources/data.csv";
-	private static final String DATA_PATH_INVALID = "src/test/resources/data1.csv";
+	private static final String MATCHING_CSV = TestPath.MATCHING_CSV.getPath();
+	private static final String CURRENCY_CSV = TestPath.CURRENCY_CSV.getPath();
+	private static final String DATA_PATH = TestPath.DATA_PATH.getPath();
+	private static final String DATA_PATH_INVALID = TestPath.DATA_PATH_INVALID.getPath();
 
 	@Test
 	public void shouldReadDataFromCSV() {
